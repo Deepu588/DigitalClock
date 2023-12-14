@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalClock</title>
+    <style>
+           
+        span{
+            font-size:40px;
+            font-family:'Times New Roman', Times, serif;
+            color:white;
+            padding-right:6px;
+            font-weight: bold;
+        }
+        #hms{
+            font-size:12px;
+            color:white;
+            position:absolute;
+            top:79%;
+            left:21%;
+            color:white;
+            letter-spacing: 1px;
+        }
+        #dat
+        {
+            position: absolute;
+            font-size:15px;
+            color:white;
+            letter-spacing:2px;
+            top:8%;
+            left:23%;
+        }
+        #tbox
+        {
+            position:absolute;
+            top:10%;
+            left:73%;
+            background-color:rgb(0, 0, 0);
+            height:126px;
+            width:330px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            z-index:3;
+            border-style:solid;
+            border-color:lightgrey;
+           
+            border-width: 8px;
+            animation-name: time;
+                animation-duration:1s;
+                animation-iteration-count: 1;
+
+        }
+       
+        @keyframes time
+            {
+                from{
+                    transform:rotateX(90deg);
+                }
+                to   
+                {
+                    transform:rotateX(0deg);
+
+                }
+            }
+        body
+        {
+            height:100vh;
+            width:100vw;
+            overflow:hidden;
+            background-image:url(wall.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position:center;
+            background-size:cover;
+        }
+        *
+        {
+            margin:0%;
+            padding:0%;
+        }
+
+        #days
+        {
+            position: absolute;
+            font-size:14px;
+            color:white;
+            letter-spacing:2px;
+            top:14%;
+            left:90%;
+        }
+        .ima
+        {
+            position: absolute;
+            left:75%;
+            top:13%;
+            z-index: 4;
+            height:25px;
+            width:25px;
+            display:block;
+        }
+    </style>
+</head><body>
+    <img src="nut.png" height="20px" width="20px" style="position:absolute;left:74%;top:9%;z-index: 6;">
+    <img src="nut.png" height="20px" width="20px" style="position:absolute;left:94%;top:9%;z-index: 6;">
+<img src="sun.png" class="ima" title="day" id="sun"><img src="moon.png" class="ima" title="night" id="moon">
+    <div id="main">
+    <div id="tbox">
+        <div id="dat"></div>
+<span id="hrs"></span>&nbsp;&nbsp;
+<span>:</span>&nbsp;&nbsp;
+<span id="min"></span>&nbsp;&nbsp;
+<span>:</span>&nbsp;&nbsp;
+<span id="sec"></span>
+<br>   <div id="hms">HOURS  :  MINUTES  : SECONDS</div>
+<div id="days"></div>
+   </div> 
+</div>
+</body>
+<script>
+
+    function showTime()
+    {
+        const dayNames=["SUN ","MON","TUES","WEDNES","THURS","FRI","SATUR"];
+        const monthName=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    let hours=document.getElementById("hrs");
+    let minutes=document.getElementById("min");
+    let seconds=document.getElementById("sec");
+    let date=document.getElementById("dat");
+    let days=document.getElementById("days");
+
+    let currentTime=new Date();
+    if(currentTime.getHours()>=6 && currentTime.getHours()<=17)
+    {
+        document.getElementById("moon").style.display='none';
+    }
+    else{
+        document.getElementById("sun").style.display='none';
+
+    }
+       var  day=dayNames[currentTime.getDay()];
+       var res="";
+        for(var v=0;v<=day.length-1;v++)
+{
+             res=res+day[v]+"<br>";
+}
+days.innerHTML  =res;
+
+    let finalDate=currentTime.getDate();
+    if(finalDate<10)
+    {
+        finalDate='0'+finalDate;
+    }
+   date.innerHTML= finalDate +" - "+monthName[currentTime.getMonth()]+" - "+currentTime.getFullYear();
+    if(currentTime.getHours()<10)
+    {
+        hours.innerHTML="0"+currentTime.getHours();
+
+    }
+    else
+    {
+    hours.innerHTML=currentTime.getHours();
+    }
+
+    if(currentTime.getMinutes()<10)
+    {
+        minutes.innerHTML="0"+currentTime.getMinutes();
+ 
+    }
+    else{
+    minutes.innerHTML=currentTime.getMinutes();
+    }
+
+    if(currentTime.getSeconds()<10)
+    {
+    seconds.innerHTML="0"+currentTime.getSeconds();
+    }
+    else{
+        seconds.innerHTML=currentTime.getSeconds();
+
+    }
+    }
+    setTimeout(showTime,10)
+    setInterval(showTime,1000);
+</script>
+</html>
